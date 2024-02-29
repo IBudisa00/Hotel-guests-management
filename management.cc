@@ -51,3 +51,13 @@ void hotel::deleteGuest(int guestId){
         temp = temp->nextGuest;
     }
 }
+
+void hotel::printGuestList(){
+    guest *temp = headGuest;
+
+    while(temp != NULL)
+    {
+        std::cout << temp->guestId << " Name: " << temp->firstName << " Surname: " << temp->lastName << " Days until check-out: " << temp->daysTillCheckOut << std::endl;
+        temp = temp->nextGuest;
+    }
+}
