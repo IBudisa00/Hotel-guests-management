@@ -4,9 +4,11 @@
 #include <utility>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 void registerGuestsFromFile(hotel &hotel);
 void registerGuests(hotel& hotel, char *firstName, char *lastName, unsigned int daysToStay);
+int checkIfNumber(std::string *inputLine);
 
 int main(){
     char hotelName[MAX_SIZE];
@@ -16,6 +18,9 @@ int main(){
     hotel hotel(hotelName);
 
     registerGuestsFromFile(hotel);
+    hotel.printGuestList();
+    hotel.simulateDays(3);
+    hotel.printGuestList();
 
     return 0;
 }
@@ -28,6 +33,8 @@ void registerGuestsFromFile(hotel &hotel){
     char firstName[MAX_SIZE];
     char lastName[MAX_SIZE];
     unsigned int daysToStay;
+    int wordCounter = RESET;
+    int invalidArgument = NO;
 
     guestsInfoFile.open("guests.txt");
 
@@ -40,13 +47,30 @@ void registerGuestsFromFile(hotel &hotel){
     while(!guestsInfoFile.eof())
     {
         std::getline(guestsInfoFile, inputLine);
-        while(std::getline(guestsInfoFile, inputLine, ' ') != "\n")
+        std::stringstream word (inputLine);
+        while(std::getline(word, inputLine, ' '))
         {
-            strcpy(firstName, inputLine.c_str());
-            strcpy(lastName, inputLine.c_str());
-            daysToStay = inputLine;
-            registerGuests(hotel, firstName, lastName, daysToStay);
+            wordCounter++;
+            if(wordCounter == FIRSTNAME)
+            {
+                strcpy(firstName, inputLine.c_str());
+            }
+            else if(wordCounter == LASTNAME)
+            {
+                strcpy(lastName, inputLine.c_str());
+            }
+            else if(wordCounter == DAYSTOSTAY)
+            {
+                if(checkIfNumber(&inputLine))
+                    daysToStay = stoi(inputLine);
+                else
+                    invalidArgument = YES;
+
+                wordCounter = RESET;
+            }
         }
+        if(!invalidArgument)
+            registerGuests(hotel, firstName, lastName, daysToStay);
     }
 
     guestsInfoFile.close();
@@ -54,4 +78,18 @@ void registerGuestsFromFile(hotel &hotel){
 
 void registerGuests(hotel& hotel, char *firstName, char *lastName, unsigned int daysToStay){
     hotel.addNewGuest(firstName, lastName, daysToStay);
+}
+
+int checkIfNumber(std::string *inputLine){
+    int numberDetected = YES;
+    std::string::iterator it;
+    for(it=inputLine->begin();it!=inputLine->end();it++)
+    {
+        if(!isdigit(*it))
+        {
+            numberDetected = NO;
+            break;
+        }
+    }
+    return numberDetected;
 }

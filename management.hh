@@ -22,4 +22,6 @@ class hotel{
         void addNewGuest(char *guestFirstName, char *guestLastName, int guestDaysTillCheckOut);
         void deleteGuest(int guestId);
         void printGuestList();
+        void updateGuestList();
+        void simulateDays(int daysToPass);
 };

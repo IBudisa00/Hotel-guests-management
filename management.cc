@@ -57,7 +57,30 @@ void hotel::printGuestList(){
 
     while(temp != NULL)
     {
-        std::cout << temp->guestId << " Name: " << temp->firstName << " Surname: " << temp->lastName << " Days until check-out: " << temp->daysTillCheckOut << std::endl;
+        std::cout << "Guest ID: " << temp->guestId << " Name: " << temp->firstName << " Surname: " << temp->lastName << " Days until check-out: " << temp->daysTillCheckOut << std::endl;
         temp = temp->nextGuest;
     }
+}
+
+void hotel::updateGuestList(){
+    guest *temp = headGuest->nextGuest;
+
+    while(temp != NULL)
+    {
+        if(temp->daysTillCheckOut <= 0)
+        {
+            std::cout << "Guest ID: " << temp->guestId << " Guest name: " << temp->firstName << " " << temp->lastName << " checked out...\n";
+            deleteGuest(temp->guestId);
+        }
+    }
+}
+
+void hotel::simulateDays(int daysToPass){
+    guest *temp = headGuest->nextGuest;
+
+    while(temp != NULL)
+    {
+        temp->daysTillCheckOut -= daysToPass;
+    }
+    updateGuestList();
 }
