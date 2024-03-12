@@ -1,10 +1,11 @@
 #include <iostream>
-#include <management.hh>
+#include "management.hh"
 #include <map>
 #include <utility>
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <cstring>
 
 void registerGuestsFromFile(hotel &hotel);
 void registerGuests(hotel& hotel, char *firstName, char *lastName, unsigned int daysToStay);
@@ -17,10 +18,10 @@ int main(){
     std::cin >> hotelName;
     hotel hotel(hotelName);
 
-    registerGuestsFromFile(hotel);
-    hotel.printGuestList();
-    hotel.simulateDays(3);
-    hotel.printGuestList();
+    //registerGuestsFromFile(hotel);
+    //hotel.printGuestList();
+    //hotel.simulateDays(3);
+    //hotel.printGuestList();
 
     return 0;
 }
