@@ -18,10 +18,10 @@ int main(){
     std::cin >> hotelName;
     hotel hotel(hotelName);
 
-    //registerGuestsFromFile(hotel);
-    //hotel.printGuestList();
-    //hotel.simulateDays(3);
-    //hotel.printGuestList();
+    registerGuestsFromFile(hotel);
+    hotel.printGuestList();
+    hotel.simulateDays(3);
+    hotel.printGuestList();
 
     return 0;
 }
@@ -72,6 +72,7 @@ void registerGuestsFromFile(hotel &hotel){
         }
         if(!invalidArgument)
             registerGuests(hotel, firstName, lastName, daysToStay);
+        invalidArgument = NO;
     }
 
     guestsInfoFile.close();
@@ -84,7 +85,7 @@ void registerGuests(hotel& hotel, char *firstName, char *lastName, unsigned int 
 int checkIfNumber(std::string *inputLine){
     int numberDetected = YES;
     std::string::iterator it;
-    for(it=inputLine->begin();it!=inputLine->end();it++)
+    for(it = inputLine->begin(); it != inputLine->end(); it++)
     {
         if(!isdigit(*it))
         {

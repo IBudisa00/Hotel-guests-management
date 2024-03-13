@@ -18,7 +18,6 @@ class hotel{
         int idCounter = 0;
     public:
         hotel(char *hotelsName);
-        std::map<int, std::vector<int>> rooms;
         void addNewGuest(char *guestFirstName, char *guestLastName, int guestDaysTillCheckOut);
         void deleteGuest(int guestId);
         void printGuestList();
